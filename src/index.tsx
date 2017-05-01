@@ -13,9 +13,9 @@ import * as $ from 'jquery';
 // )
 
 const headers = ['header1', 'header2'];
-const excelData = [['data11', 'data12'], ['data21', 'data22']];
+const rows = [['data11', 'data12'], ['data21', 'data22']];
 ReactDOM.render(
-    <Excel headers={headers} data={excelData} />,
+    <Excel data={{ headers, rows }} layout={{ columnWidth: [4, 8] }} />,
     $('.excel')[0]
 )
 

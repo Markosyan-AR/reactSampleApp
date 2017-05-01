@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export class Excel extends React.Component<IExcelData, void>{
+export class Excel extends React.Component<{ data:IExcelData, layout: IExcelLayoutConfig}, void>{
     public render() {
         return React.DOM.table(
             {
@@ -8,13 +8,17 @@ export class Excel extends React.Component<IExcelData, void>{
             },
             React.DOM.thead(null,
                 React.DOM.tr(null,
-                    this.props.headers.map(header =>
-                        React.DOM.th(null, header)
+                    this.props.data.headers.map((header, index) =>{
+                        let width = this.props.layout.columnWidth[index];
+                        return React.DOM.th({
+                            className: width != null? 'col-md-' + width: ''
+                        }, header)
+                    }
                     )
                 )
             ),
             React.DOM.tbody(null,
-                this.props.data.map(row =>
+                this.props.data.rows.map(row =>
                     React.DOM.tr(
                         null,
                         row.map(cell =>
@@ -27,11 +31,15 @@ export class Excel extends React.Component<IExcelData, void>{
     }
     public defaultProps: IExcelData = {
         headers: ['a', 'b'],
-        data: [['c', 'd'], ['e', 'f']]
+        rows: [['c', 'd'], ['e', 'f']]
     }
 }
 
 export interface IExcelData {
     headers: string[],
-    data: string[][]
+    rows: string[][]
+}
+
+export interface IExcelLayoutConfig {
+    columnWidth: number[]
 }
