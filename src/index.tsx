@@ -2,6 +2,7 @@ import { Hello } from './components/hello';
 import { Excel } from './components/excel';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import * as $ from 'jquery';
 
 // ReactDOM.render(
 //     <Hello name="123" />,
@@ -11,13 +12,5 @@ import * as ReactDOM from 'react-dom';
 
 ReactDOM.render(
     <Excel headers={['header1', 'header2']} data={[['data11', 'data12'], ['data21', 'data22']]} />,
-    document.body
+    $('.excel')[0]
 )
-
-// ReactDOM.render(
-//     React.createElement(Excel, {
-//         headers: ['123'],
-//         data: [['data11', 'data12'], ['data21', 'data22']]
-//     },
-//         document.body)
-// )
