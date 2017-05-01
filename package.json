@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildDev": "webpack --watch -d --display-error-details",
+    "build": "webpack -p --display-error-details"
   },
   "author": "amarkosyan",
   "license": "ISC",
