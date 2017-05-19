@@ -7,6 +7,7 @@ export class Excel extends React.Component<{ data: IExcelData, layout: IExcelLay
                 className: 'table table-bordered table-hover'
             },
             this.renderHeader(),
+            this.renderBody()
         )
     }
     public defaultProps: IExcelData = {
@@ -32,7 +33,7 @@ export class Excel extends React.Component<{ data: IExcelData, layout: IExcelLay
 
     }
     private renderBody() {
-        React.DOM.tbody(null,
+        return React.DOM.tbody(null,
             this.props.data.rows.map((row, index) =>
                 React.DOM.tr(
                     { key: index },
