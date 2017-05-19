@@ -43,9 +43,9 @@ export class Excel extends React.Component<IExcelProps, IExcelState>{
         )
     }
 
-    private renderCell(cell: string, cellIndex: number, rowIndex: number) {
+    private renderCell(cell: string | React.DOMElement<any, any>, cellIndex: number, rowIndex: number) {
         if (this.state.edit && this.state.edit.row === rowIndex && this.state.edit.cell === cellIndex) {
-            return this.renderEditor();
+            cell = this.renderEditor(cell as string);
         }
         return React.DOM.td({
             key: cellIndex,
@@ -53,8 +53,13 @@ export class Excel extends React.Component<IExcelProps, IExcelState>{
         }, cell);
     }
 
-    private renderEditor() {
-
+    private renderEditor(content: string) {
+        return React.DOM.form(null,//{onSubmit: this._save},
+            React.DOM.input({
+                type: 'text',
+                defaultValue: content,
+            })
+        );
     }
 
     private showEditor(e: React.MouseEvent<HTMLTableDataCellElement>, cellIndex: number, rowIndex: number) {
