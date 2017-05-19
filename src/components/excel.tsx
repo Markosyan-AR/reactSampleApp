@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export class Excel extends React.Component<{ data: IExcelData, layout: IExcelLayoutConfig }, IExcelState>{
+export class Excel extends React.Component<IExcelProps, IExcelState>{
     public render() {
         return React.DOM.table(
             {
@@ -28,10 +28,7 @@ export class Excel extends React.Component<{ data: IExcelData, layout: IExcelLay
                         className: width != null ? 'col-md-' + width : '',
                         key: index
                     }, header)
-                }
-                )
-            )
-        )
+                })))
 
     }
     private renderBody() {
@@ -68,6 +65,11 @@ export class Excel extends React.Component<{ data: IExcelData, layout: IExcelLay
             }
         })
     }
+}
+
+export interface IExcelProps {
+    data: IExcelData,
+    layout: IExcelLayoutConfig
 }
 
 export interface IExcelState {
