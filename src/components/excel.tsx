@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export class Excel extends React.Component<{ data: IExcelData, layout: IExcelLayoutConfig }, void>{
+export class Excel extends React.Component<{ data: IExcelData, layout: IExcelLayoutConfig }, IExcelState>{
     public render() {
         return React.DOM.table(
             {
@@ -14,9 +14,11 @@ export class Excel extends React.Component<{ data: IExcelData, layout: IExcelLay
         headers: ['a', 'b'],
         rows: [['c', 'd'], ['e', 'f']]
     }
-    public getInitialState() {
-        return {};
-    }
+    public state: IExcelState = {
+        data: this.props.data,
+        edit: null
+    };
+
     private renderHeader() {
         return React.DOM.thead(null,
             React.DOM.tr(null,
@@ -37,15 +39,42 @@ export class Excel extends React.Component<{ data: IExcelData, layout: IExcelLay
             this.props.data.rows.map(this.renderRow)
         )
     }
-    private renderRow(row: string[], index: number) {
+    private renderRow = (row: string[], rowIndex: number) => {
         return React.DOM.tr(
-            { key: index },
-            row.map(this.renderCell)
+            { key: rowIndex },
+            row.map((cell, cellIndex) => this.renderCell(cell, cellIndex, rowIndex))
         )
     }
 
-    private renderCell(cell: string, index: number) {
-        return React.DOM.td({ key: index }, cell);
+    private renderCell(cell: string, cellIndex: number, rowIndex: number) {
+        if (this.state.edit && this.state.edit.row === rowIndex && this.state.edit.cell === cellIndex) {
+            return this.renderEditor();
+        }
+        return React.DOM.td({
+            key: cellIndex,
+            onDoubleClick: e => this.showEditor(e, cellIndex, rowIndex)
+        }, cell);
+    }
+
+    private renderEditor() {
+
+    }
+
+    private showEditor(e: React.MouseEvent<HTMLTableDataCellElement>, cellIndex: number, rowIndex: number) {
+        this.setState({
+            edit: {
+                row: rowIndex,
+                cell: cellIndex
+            }
+        })
+    }
+}
+
+export interface IExcelState {
+    data: IExcelData,
+    edit?: {
+        row: number,
+        cell: number
     }
 }
 
