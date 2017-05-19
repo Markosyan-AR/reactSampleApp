@@ -34,17 +34,19 @@ export class Excel extends React.Component<{ data: IExcelData, layout: IExcelLay
     }
     private renderBody() {
         return React.DOM.tbody(null,
-            this.props.data.rows.map((row, index) =>
-                React.DOM.tr(
-                    { key: index },
-                    row.map(cell =>
-                        React.DOM.td(null, cell)
-                    )
-                )
-            )
+            this.props.data.rows.map(this.renderRow)
+        )
+    }
+    private renderRow(row: string[], index: number) {
+        return React.DOM.tr(
+            { key: index },
+            row.map(this.renderCell)
         )
     }
 
+    private renderCell(cell: string, index: number) {
+        return React.DOM.td({ key: index }, cell);
+    }
 }
 
 export interface IExcelData {
