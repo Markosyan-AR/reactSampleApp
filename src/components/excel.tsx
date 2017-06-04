@@ -29,7 +29,6 @@ export class Excel extends React.Component<IExcelProps, IExcelState>{
                         key: index
                     }, header)
                 })))
-
     }
     private renderBody() {
         return React.DOM.tbody(null,
@@ -47,6 +46,7 @@ export class Excel extends React.Component<IExcelProps, IExcelState>{
         if (this.state.edit && this.state.edit.row === rowIndex && this.state.edit.cell === cellIndex) {
             cell = this.renderEditor(cell as string);
         }
+
         return React.DOM.td({
             key: cellIndex,
             onDoubleClick: e => this.showEditor(e, cellIndex, rowIndex)
@@ -54,12 +54,24 @@ export class Excel extends React.Component<IExcelProps, IExcelState>{
     }
 
     private renderEditor(content: string) {
-        return React.DOM.form(null,//{onSubmit: this._save},
+        return React.DOM.form({
+            onSubmit: (e) => { this.save(e); }
+        },
             React.DOM.input({
                 type: 'text',
                 defaultValue: content,
+                autoFocus: true
             })
         );
+    }
+
+    private save(e: React.ChangeEvent<any>) {
+        e.preventDefault();
+        debugger;
+        let value = e.target.firstChild.value;
+        let data = this.state.data.rows.slice();
+        data[this.state.edit.row][this.state.edit.cell] = value;
+        this.closeEditor();
     }
 
     private showEditor(e: React.MouseEvent<HTMLTableDataCellElement>, cellIndex: number, rowIndex: number) {
@@ -69,6 +81,10 @@ export class Excel extends React.Component<IExcelProps, IExcelState>{
                 cell: cellIndex
             }
         })
+    }
+
+    private closeEditor() {
+        this.setState({ edit: null });
     }
 }
 
