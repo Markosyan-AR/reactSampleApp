@@ -67,7 +67,6 @@ export class Excel extends React.Component<IExcelProps, IExcelState>{
 
     private save(e: React.ChangeEvent<any>) {
         e.preventDefault();
-        debugger;
         let value = e.target.firstChild.value;
         let data = this.state.data.rows.slice();
         data[this.state.edit.row][this.state.edit.cell] = value;
