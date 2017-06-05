@@ -55,10 +55,13 @@ export class Excel extends React.Component<IExcelProps, IExcelState>{
 
     private renderEditor(content: string) {
         return React.DOM.form({
-            onSubmit: (e) => { this.save(e); }
+            onSubmit: () => this.closeEditor(),
+            onBlur: () => this.closeEditor(),
+            onChange: (e) => this.save(e),
         },
             React.DOM.input({
                 type: 'text',
+                className: 'input-sm',
                 defaultValue: content,
                 autoFocus: true
             })
@@ -66,11 +69,13 @@ export class Excel extends React.Component<IExcelProps, IExcelState>{
     }
 
     private save(e: React.ChangeEvent<any>) {
-        e.preventDefault();
-        let value = e.target.firstChild.value;
+        let value = e.target.value;
+        this.saveData(value);
+    }
+
+    private saveData(value: string) {
         let data = this.state.data.rows.slice();
         data[this.state.edit.row][this.state.edit.cell] = value;
-        this.closeEditor();
     }
 
     private showEditor(e: React.MouseEvent<HTMLTableDataCellElement>, cellIndex: number, rowIndex: number) {
