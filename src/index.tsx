@@ -6,18 +6,13 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as $ from 'jquery';
 
-// ReactDOM.render(
-//     <Hello name="123" />,
-//     //<Excel data=['1', '2'] headers=['h1', 'h2'] >    ,
-//     document.body
-// )
-
 const headers = ['header1', 'header2'];
 const rows = [['data11', 'data12'], ['data21', 'data22']];
+
 ReactDOM.render(
     <Excel data={{ headers, rows }} layout={{ columnWidth: [4, 8] }} />,
     $('.excel')[0]
-)
+);
 
 const menuConfig: MenuItem[] = [
     {
@@ -67,4 +62,4 @@ const rightMenuConfig: MenuItem[] = [
 ReactDOM.render(
     <NavBar projectName="React Sample" menuItems={menuConfig} rightMenuItems={rightMenuConfig} />,
     $('.nav')[0]
-)
+);
